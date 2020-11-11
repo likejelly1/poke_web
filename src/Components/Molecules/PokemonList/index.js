@@ -5,24 +5,29 @@ export class PokemonList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            loading:false,
+            url:"",
             list: null,
-            modalShow:false
+            modalShow: false,
+            next: null,
+            prev:null
         }
+
     }
     render() {
-        const pokeListUrl = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=5"
+        let pokeListUrl = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=5"
         const imageUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/"
         fetch(pokeListUrl)
             .then((res) => res.json())
             .then((response) => {
                 this.setState({
+                    next: response.next,
+                    prev: response.previous,
                     list: response.results.map((item, index) => {
                         return (
                             <div key={`PokemonList-${index}`} className={`item column-4 ${index === 0  ? "row-2" :"row-1"}`}>
                                 <div className="card card-featured">
                                     <div className="tag">
-                                        <button onClick={()=>this.setState({modalShow:true})} className="streched-link d-block btn btn-link text-white">
+                                        <button key={`pokemonDetails-${index}`} onClick={() => {this.setState({ modalShow: true, url:item.url })}} className="streched-link d-block btn btn-link text-white">
                                             <h5>{item.name[0].toUpperCase()+item.name.slice(1)}</h5>
                                         </button>
                                     </div>
@@ -31,8 +36,8 @@ export class PokemonList extends Component {
                                         <img src={imageUrl + (index + 1) + '.png'} alt={item.name} className="img-cover img-fluid"/>
                                     </figure>
                                 </div>
-                            
-                                <PokemonDetails url={item.url} show={this.state.modalShow} onHide={() => this.setState({modalShow:false})} />
+
+                                
                             </div>
                         )
                     })
@@ -47,8 +52,9 @@ export class PokemonList extends Component {
                         {
                                 this.state.list
                         }
-                    </div>
+                        <PokemonDetails url={this.state.url} show={this.state.modalShow} onHide={() => this.setState({modalShow:false})} />
 
+                    </div>
                 </div>
             </section>
         )

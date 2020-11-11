@@ -4,7 +4,7 @@ import { scrollingPage } from 'Utils'
 
 const Hero = () => {
     return (
-        <section className="pt-4">
+        <section className="pt-5 mt-5">
             <div className="container">
                 <Row className="align-items-center" style={{marginTop:50}}>
                     <div className="col-auto pr-5" style={{width:422}}>

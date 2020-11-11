@@ -80,3 +80,31 @@
         }
     }
 }
+
+@media screen and (max-width:0px) {
+    .container-grid {
+        .item {
+            &.column-4 {
+                grid-column-end: span 12
+            }
+            &.row-2 {
+                grid-row-end: span 1;
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width:768px) {
+    .container-grid {
+        .item {
+            &.column-4 {
+                grid-column-end: span 6
+            }
+            &.row-2 {
+                grid-row-end: span 1;
+            }
+        }
+    }
+}
+
